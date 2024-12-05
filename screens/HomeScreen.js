@@ -48,16 +48,21 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       {/* Botones de navegación */}
+      {/* Botones de navegación */}
       <View style={styles.navigationContainer}>
-        <TouchableOpacity style={styles.navButton}>
-          <Ionicons name="stats-chart-outline" size={20} color="#fff" />
-          <Text style={styles.navButtonText}>Ver Detalles</Text>
+        <TouchableOpacity
+          style={styles.navButton}
+          onPress={() => navigation.navigate("EventList")} // Redirige a la lista de eventos
+        >
+          <Ionicons name="list-outline" size={20} color="#fff" />
+          <Text style={styles.navButtonText}>Ver Eventos</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.navButton}>
           <Ionicons name="settings-outline" size={20} color="#fff" />
           <Text style={styles.navButtonText}>Configuración</Text>
         </TouchableOpacity>
       </View>
+
 
       {/* Botón para crear eventos */}
       <View style={styles.createEventContainer}>

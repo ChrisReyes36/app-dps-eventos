@@ -5,7 +5,8 @@ import "react-native-gesture-handler";
 
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
-import CreateEventScreen from "./screens/CreateEventScreen"; // Nueva pantalla
+import CreateEventScreen from "./screens/CreateEventScreen";
+import EventListScreen from "./screens/EventListScreen";
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -38,6 +39,16 @@ export default function App() {
           component={CreateEventScreen} // Nueva pantalla
           options={{
             title: "Crear Evento",
+            headerTintColor: "white",
+            headerTitleAlign: "center",
+            headerStyle: { backgroundColor: "#525fe1" },
+          }}
+        />
+        <Stack.Screen
+          name="EventList" // Registra la pantalla aquí
+          component={EventListScreen}
+          options={{
+            title: "Lista de Eventos",
             headerTintColor: "white",
             headerTitleAlign: "center",
             headerStyle: { backgroundColor: "#525fe1" },
