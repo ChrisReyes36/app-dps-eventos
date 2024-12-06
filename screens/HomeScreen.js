@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../credenciales"; // Asegúrate de importar tu Firestore correctamente
+import { getAuth, signOut } from "firebase/auth"; // Importa Firebase Auth
+
+const auth = getAuth(); // Instancia de autenticación
 
 export default function HomeScreen({ navigation }) {
   const [eventCount, setEventCount] = useState(0); // Estado para almacenar el conteo de eventos
@@ -16,12 +26,26 @@ export default function HomeScreen({ navigation }) {
     return () => unsubscribe();
   }, []); // Solo se ejecuta al montar el componente
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        Alert.alert("Sesión cerrada", "Has cerrado sesión correctamente.");
+        navigation.replace("Login"); // Redirige a la pantalla de inicio de sesión
+      })
+      .catch((error) => {
+        console.error(error);
+        Alert.alert("Error", "Hubo un problema al cerrar sesión.");
+      });
+  };
+
   return (
     <ScrollView style={styles.container}>
       {/* Encabezado */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Dashboard</Text>
-        <Ionicons name="menu-outline" size={24} color="#fff" style={styles.headerIcon} />
+        <TouchableOpacity onPress={handleLogout}>
+          <Ionicons name="log-out-outline" size={24} color="#fff" style={styles.headerIcon} />
+        </TouchableOpacity>
       </View>
 
       {/* Sección de estadísticas */}
@@ -115,8 +139,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "30%",
-    elevation: 5, // Sombra en Android
-    shadowColor: "#000", // Sombra en iOS
+    elevation: 5,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
