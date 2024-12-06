@@ -7,7 +7,7 @@ import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import CreateEventScreen from "./screens/CreateEventScreen";
 import EventListScreen from "./screens/EventListScreen";
-
+import EventDetailsScreen from "./screens/EventDetailsScreen";
 export default function App() {
   const Stack = createStackNavigator();
 
@@ -49,6 +49,16 @@ export default function App() {
           component={EventListScreen}
           options={{
             title: "Lista de Eventos",
+            headerTintColor: "white",
+            headerTitleAlign: "center",
+            headerStyle: { backgroundColor: "#525fe1" },
+          }}
+        />
+        <Stack.Screen
+          name="EventDetails"
+          component={EventDetailsScreen}
+          options={{
+            title: "Detalles del Evento",
             headerTintColor: "white",
             headerTitleAlign: "center",
             headerStyle: { backgroundColor: "#525fe1" },

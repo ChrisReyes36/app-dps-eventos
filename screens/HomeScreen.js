@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../credenciales"; // Asegúrate de importar tu Firestore correctamente
 
 export default function HomeScreen({ navigation }) {
   const [eventCount, setEventCount] = useState(0); // Estado para almacenar el conteo de eventos
 
   useEffect(() => {
-    const fetchEventCount = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, "events")); // Cambia "events" al nombre real de tu colección
-        setEventCount(querySnapshot.size); // Obtén el número de documentos
-      } catch (error) {
-        console.error("Error al obtener los eventos:", error);
-      }
-    };
+    const unsubscribe = onSnapshot(collection(db, "events"), (querySnapshot) => {
+      setEventCount(querySnapshot.size); // Obtén el número de documentos en tiempo real
+    });
 
-    fetchEventCount(); // Llama a la función cuando se monte el componente
-  }, []); // Ejecuta solo al montar el componente
+    // Limpiar la suscripción cuando el componente se desmonte
+    return () => unsubscribe();
+  }, []); // Solo se ejecuta al montar el componente
 
   return (
     <ScrollView style={styles.container}>
@@ -48,7 +44,6 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       {/* Botones de navegación */}
-      {/* Botones de navegación */}
       <View style={styles.navigationContainer}>
         <TouchableOpacity
           style={styles.navButton}
@@ -62,7 +57,6 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.navButtonText}>Configuración</Text>
         </TouchableOpacity>
       </View>
-
 
       {/* Botón para crear eventos */}
       <View style={styles.createEventContainer}>
