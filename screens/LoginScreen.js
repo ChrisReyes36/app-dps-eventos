@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 import appFirebase from "../credenciales";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -30,88 +31,95 @@ export default function LoginScreen(props) {
   };
 
   return (
-    <View style={styles.padre}>
-      <View>
-        <Image
-          source={require("../assets/profile.jpg")}
-          style={styles.profile}
-        />
-      </View>
-
-      <View style={styles.tarjeta}>
-        <View style={styles.cajaTexto}>
+    <View style={styles.container}>
+      <Image
+        source={require("../assets/profile.jpg")}
+        style={styles.profile}
+      />
+      <Text style={styles.title}>Bienvenido de nuevo</Text>
+      <View style={styles.card}>
+        <View style={styles.inputContainer}>
+          <Ionicons name="mail-outline" size={20} color="#525fe1" />
           <TextInput
             placeholder="Correo"
-            style={{ paddingHorizontal: 15 }}
+            style={styles.input}
             onChangeText={(text) => setEmail(text)}
           />
         </View>
-
-        <View style={styles.cajaTexto}>
+        <View style={styles.inputContainer}>
+          <Ionicons name="lock-closed-outline" size={20} color="#525fe1" />
           <TextInput
             placeholder="Contraseña"
-            style={{ paddingHorizontal: 15 }}
+            style={styles.input}
             secureTextEntry={true}
             onChangeText={(text) => setPassword(text)}
           />
         </View>
-
-        <View style={styles.padreBoton}>
-          <TouchableOpacity style={styles.cajaBoton} onPress={iniciarSesion}>
-            <Text style={styles.textoBoton}>Iniciar Sesión</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button} onPress={iniciarSesion}>
+          <Text style={styles.buttonText}>Iniciar Sesión</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  padre: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    backgroundColor: "#f5f7fb",
+    padding: 20,
   },
   profile: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderColor: "white",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 20,
   },
-  tarjeta: {
-    margin: 20,
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#525fe1",
+    marginBottom: 30,
+  },
+  card: {
+    width: "100%",
+    padding: 20,
     backgroundColor: "white",
     borderRadius: 20,
-    width: "90%",
-    padding: 20,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
     elevation: 5,
   },
-  cajaTexto: {
-    paddingVertical: 20,
-    backgroundColor: "#cccccc40",
-    borderRadius: 30,
-    marginVertical: 10,
-  },
-  padreBoton: {
+  inputContainer: {
+    flexDirection: "row",
     alignItems: "center",
+    backgroundColor: "#eaeaea",
+    borderRadius: 30,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    height: 50,
   },
-  cajaBoton: {
+  input: {
+    flex: 1,
+    marginLeft: 10,
+  },
+  button: {
     backgroundColor: "#525fe1",
     borderRadius: 30,
-    paddingVertical: 20,
-    width: 150,
+    paddingVertical: 15,
+    alignItems: "center",
     marginTop: 20,
   },
-  textoBoton: {
-    textAlign: "center",
+  buttonText: {
     color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
